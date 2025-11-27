@@ -31,6 +31,38 @@ namespace hoja_de_trabajo_progra
             string nombre = textBox1.Text;
             string Nit = textBox2.Text;
             int telefono = int.Parse(textBox3.Text);
+
+            string sql = "INSERT INTO clientes (nombre, Nit, telefono) VALUES (@nombre, @Nit, @telefono)";
+            try
+            {
+                Conexion cnx = new Conexion();
+                using (MySqlCommand cmd = new MySqlCommand(sql, cnx.ObtenerConexion()))
+                {
+                    cmd.Parameters.AddWithValue("@nombre", nombre);
+                    cmd.Parameters.AddWithValue("@Nit", Nit);
+                    cmd.Parameters.AddWithValue("@telefono", telefono);
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+                    if (filasAfectadas > 0)
+                    {
+                        MessageBox.Show("Registro insertado correctamente.", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        textBox1.Clear();
+                        textBox2.Clear();
+                        textBox3.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo insertar el registro.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (MySqlException mysqlEx)
+            {
+                MessageBox.Show("Error de Conexion: " + mysqlEx.Message, "Error de MySQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de Conexion: " + ex.Message, "Error Humano", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -51,7 +83,7 @@ namespace hoja_de_trabajo_progra
                 condiciones.Add("Nit = '" + Nit + "'");
             }
 
-            if (!string.IsNullOrEmpty(telefono) && int.TryParse(textBox3.Text, out int tel))
+            if (!string.IsNullOrEmpty(telefono) && int.TryParse(telefono, out int tel))
             {
                 condiciones.Add("telefono = " + tel);
             }
@@ -77,9 +109,9 @@ namespace hoja_de_trabajo_progra
                     {
                         cmd.Parameters.AddWithValue("@Nit", Nit);
                     }
-                    if (!string.IsNullOrEmpty(telefono) && int.TryParse(textBox3.Text, out int tel))
+                    if (!string.IsNullOrEmpty(telefono) && int.TryParse(telefono, out int tele))
                     {
-                        cmd.Parameters.AddWithValue("@telefono", tel);
+                        cmd.Parameters.AddWithValue("@telefono", tele);
                     }
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
