@@ -14,9 +14,9 @@ using System.Windows.Forms;
 namespace hoja_de_trabajo_progra
 {
     
-    public partial class Form1 : Form
+    public partial class ModuloCliente : Form
     {
-        public Form1()
+        public ModuloCliente()
         {
             InitializeComponent();
         }
