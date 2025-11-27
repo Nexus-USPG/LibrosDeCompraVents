@@ -1,11 +1,11 @@
-﻿using hoja_de_trabajo_progra; // Para usar la clase Factura
+﻿using hoja_de_trabajo_progra; 
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO; // Necesario para Exportar a CSV
+using System.IO; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,10 +27,10 @@ namespace hoja_de_trabajo_progra
         }
 
 
-        // 💡 AGREGADO/MODIFICADO
+
         private void InicializarDataGrids()
         {
-            // Función auxiliar para inicializar la estructura de una grilla
+            
             Action<DataGridView> configurarGrid = (dgv) =>
             {
                 if (dgv.Columns.Count == 0)
@@ -44,17 +44,14 @@ namespace hoja_de_trabajo_progra
                     dgv.Columns.Add("TotalQ", "Total");
                     dgv.Columns.Add("Observaciones", "Observaciones");
 
-                    // 💡 CORRECCIÓN APLICADA: 
-                    // 1. Agregar la columna (esto devuelve el índice)
                     dgv.Columns.Add("Tipo", "Tipo");
 
-                    // 2. Acceder a la columna por su nombre para establecer la propiedad Visible
                     dgv.Columns["Tipo"].Visible = false;
                 }
             };
 
-            // Aplicar configuración a los DataGridViews
-            configurarGrid(dgvVenta); // ASUMO la existencia de dgvVenta
+
+            configurarGrid(dgvVenta); 
             configurarGrid(dgvCompra);
         }
 
@@ -64,7 +61,6 @@ namespace hoja_de_trabajo_progra
         {
             dgv.Rows.Clear();
 
-            // 💡 MODIFICADO: Consulta para obtener solo un tipo de factura
             string sql = "SELECT * FROM facturas WHERE tipo = @tipo AND MONTH(fecha_emision) = @mes AND YEAR(fecha_emision) = @anio";
 
             try
@@ -80,9 +76,6 @@ namespace hoja_de_trabajo_progra
                     {
                         while (reader.Read())
                         {
-                            // La lógica para determinar qué NIT/Nombre usar depende de si es VENTA o COMPRA.
-                            // Para VENTAS: se muestra NIT_Receptor y Nombre_Receptor.
-                            // Para COMPRAS: se muestra NIT_Emisor y Nombre_Emisor.
                             string nit = tipo == "VENTA" ? reader["nit_receptor"].ToString() : reader["nit_emisor"].ToString();
                             string nombre = tipo == "VENTA" ? reader["nombre_receptor"].ToString() : reader["nombre_emisor"].ToString();
 
@@ -142,12 +135,9 @@ namespace hoja_de_trabajo_progra
             int mes = dateTimePicker1.Value.Month;
             int anio = dateTimePicker1.Value.Year;
 
-            // 1. Cargar Libro de Ventas en dgvVenta
-            // Esto debería cargar SOLO VENTAS
+
             CargarDatosEnGrid(dgvVenta, "VENTA", mes, anio);
 
-            // 2. Cargar Libro de Compras en dgvCompra
-            // Esto debería cargar SOLO COMPRAS
             CargarDatosEnGrid(dgvCompra, "COMPRA", mes, anio);
 
             GenerarReporteMensual();
@@ -164,8 +154,8 @@ namespace hoja_de_trabajo_progra
         {
             string serie = txtSerie.Text.Trim();
             string DTE = txtDTE.Text.Trim();
-            string autorizacion = txtAutorizacion.Text.Trim(); // 💡 ASUMO el nombre del control
-            string acceso = txtAcceso.Text.Trim(); // 💡 ASUMO el nombre del control
+            string autorizacion = txtAutorizacion.Text.Trim(); 
+            string acceso = txtAcceso.Text.Trim(); 
             string NitEmisor = txtNitEmisor.Text.Trim();
             string direEmisor = txtDireccionEmisor.Text.Trim();
             string NitReceptor = txtNitReceptor.Text.Trim();
@@ -173,19 +163,19 @@ namespace hoja_de_trabajo_progra
             string NombreEmisor = txtNombreEmisor.Text.Trim();
             string observaciones = txtObservaciones.Text.Trim();
 
-            // 💡 ASUMO un TextBox para el Total (obligatorio en DB). Si no existe, debes crearlo.
-            string total_str = txtTotal.Text.Trim(); // ASUMO txtTotal
+
+            string total_str = txtTotal.Text.Trim(); 
             string impuestos_str = txtImpuestos.Text.Trim();
             string descuentos_str = txtDescuentos.Text.Trim();
 
-            // Validar ComboBoxes y RadioButtons
+
             if (cmbMoneda.SelectedItem == null || cmbPago.SelectedItem == null || (!radioButton1.Checked && !radioButton2.Checked))
             {
                 MessageBox.Show("Por favor, complete todos los campos obligatorios (Moneda, Pago, Tipo de Factura).", "Error de Entrada", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // 💡 MODIFICADO: Uso de TryParse para datos numéricos y decimal para precisión
+
             if (!decimal.TryParse(total_str, out decimal total))
             {
                 MessageBox.Show("El campo Total debe ser un valor numérico válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -194,29 +184,29 @@ namespace hoja_de_trabajo_progra
             decimal impuestos = decimal.TryParse(impuestos_str, out decimal imp) ? imp : 0.00m;
             decimal descuentos = decimal.TryParse(descuentos_str, out decimal desc) ? desc : 0.00m;
 
-            string moneda = cmbMoneda.SelectedItem.ToString(); // Esto debe ser GTQ, USD, EUR (3 caracteres)
+            string moneda = cmbMoneda.SelectedItem.ToString();
             string pago = cmbPago.SelectedItem.ToString();
 
-            // Determinar el tipo de factura (VENTA o COMPRA)
+
             string tipoFactura;
-            if (radioButton2.Checked) // 💡 ASUMO que el RadioButton Venta se llama radioButtonVenta
+            if (radioButton2.Checked) //RadioButton Venta se llama radioButton2
             {
                 tipoFactura = "VENTA";
             }
-            else if (radioButton1.Checked) // 💡 ASUMO que el RadioButton Compra se llama radioButtonCompra
+            else if (radioButton1.Checked) //RadioButton Compra se llama radioButton1
             {
                 tipoFactura = "COMPRA";
             }
             else
             {
-                // Esta validación ya se hizo arriba, pero por seguridad
+
                 MessageBox.Show("Debe seleccionar si es una Venta o una Compra.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             DateTime fechaEmision = dateTimePicker1.Value.Date; // Obtener la fecha del control
 
-            // --- 2. Lógica de Inserción en la DB ---
+            //  Lógica de Inserción en la DB ---
             string sql = @"
         INSERT INTO facturas 
         (tipo, fecha_emision, serie, dte, numero_autorizacion, numero_acceso, moneda, 
@@ -256,10 +246,10 @@ namespace hoja_de_trabajo_progra
                     {
                         MessageBox.Show("Factura registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // 💡 AGREGADO: Limpiar campos de entrada
+                        //Limpiar campos de entrada
                         LimpiarCampos();
 
-                        // 💡 AGREGADO: Recargar ambas grillas para mostrar el nuevo registro en su lugar correcto
+                        // Recargar ambas grillas para mostrar el nuevo registro en su lugar correcto
                         CargarFacturasMes();
                     }
                     else
@@ -283,8 +273,8 @@ namespace hoja_de_trabajo_progra
             // Limpia los TextBoxes principales
             txtSerie.Clear();
             txtDTE.Clear();
-            txtAutorizacion.Clear(); // ASUMO nombre del control
-            txtAcceso.Clear();      // ASUMO nombre del control
+            txtAutorizacion.Clear(); 
+            txtAcceso.Clear();      
 
             // Datos de Emisor y Receptor
             txtNitEmisor.Clear();
@@ -294,16 +284,11 @@ namespace hoja_de_trabajo_progra
             txtNombreReceptor.Clear();
 
             // Totales y Observaciones
-            txtTotal.Clear();             // ASUMO txtTotal
+            txtTotal.Clear();             //txtTotal
             txtImpuestos.Clear();
             txtDescuentos.Clear();
             txtObservaciones.Clear();
 
-            // Opcional: Deseleccionar ComboBoxes y RadioButtons si es necesario
-            // cmbMoneda.SelectedIndex = -1;
-            // cmbPago.SelectedIndex = -1;
-            // radioButtonVenta.Checked = false;
-            // radioButtonCompra.Checked = false;
         }
 
         private void GenerarReporteMensual()
@@ -312,42 +297,18 @@ namespace hoja_de_trabajo_progra
             int mes = dateTimePicker1.Value.Month;
             int anio = dateTimePicker1.Value.Year;
 
-            // 2. Total de ventas del mes
             decimal totalVentas = CalcularTotalPorTipo("VENTA", mes, anio);
-            // 3. Total de compras del mes
+
             decimal totalCompras = CalcularTotalPorTipo("COMPRA", mes, anio);
 
-            // 4. Porcentaje de impuesto: ya está cargado en 'porcentajeImpuesto'
-
-            // 5. Impuesto del Mes: ImpuestoDelMes = TotalVentasDelMes × (PorcentajeImpuesto / 100)
-            // 💡 AGREGADO: Variable para el cálculo del impuesto
             decimal impuestoDelMes = totalVentas * (porcentajeImpuesto / 100);
 
-            // 6. Declaración/Pago: Mes inmediatamente siguiente
-            // 💡 AGREGADO: Cálculo del mes de declaración
             DateTime fechaDeclaracion = new DateTime(anio, mes, 1).AddMonths(1);
-            string declaracionEn = fechaDeclaracion.ToString("MMMM yyyy"); // Eje: noviembre 2025
+            string declaracionEn = fechaDeclaracion.ToString("MMMM yyyy"); 
 
-            // --- Mostrar en la UI (Se asume la existencia de Labels/TextBoxes para el resumen) ---
-            // 💡 AGREGADO: Se asume que existen controles (ej. txtResumenVentas, txtResumenCompras, etc.)
-            // lblMesAnio.Text = $"{new DateTime(anio, mes, 1).ToString("MMMM")} {anio}"; // Eje: octubre 2025
-            // txtTotalVentasQ.Text = totalVentas.ToString("N2");
-            // txtTotalComprasQ.Text = totalCompras.ToString("N2");
-            // txtPorcentajeImpuesto.Text = porcentajeImpuesto.ToString("N2") + "%";
-            // txtImpuestoDelMesQ.Text = impuestoDelMes.ToString("N2");
-            // txtDeclaracionEn.Text = declaracionEn; 
-
-            // Mostrar Totales en el DataGrid (asumiendo que dgvCompra muestra la lista)
-            // Puedes agregar filas de totales al final del dgvCompra o usar otros controles.
-            // Ejemplo de totales al pie:
-            // dgvCompra.Rows.Add("", "", "", "", "TOTAL VENTAS:", "", totalVentas.ToString("N2"), "");
-            // dgvCompra.Rows.Add("", "", "", "", "TOTAL COMPRAS:", "", totalCompras.ToString("N2"), "");
-
-            // 💡 AGREGADO: También se debe generar el contenido para exportar a CSV si es necesario.
         }
         private decimal CalcularTotalPorTipo(string tipo, int mes, int anio)
         {
-            // 💡 MODIFICADO: Consulta para SUMAR el campo total
             string sql = "SELECT SUM(total) FROM facturas WHERE tipo = @tipo AND MONTH(fecha_emision) = @mes AND YEAR(fecha_emision) = @anio";
             decimal total = 0.00m;
 
@@ -377,9 +338,7 @@ namespace hoja_de_trabajo_progra
 
         private void ExportarALibroCSV(string tipo)
         {
-            // Se asume la existencia de un botón (ej. btnExportarVentas) que llama a este método.
 
-            // 1. Obtener los datos del mes/año
             int mes = dateTimePicker1.Value.Month;
             int anio = dateTimePicker1.Value.Year;
             string sql = "SELECT fecha_emision, serie, dte, nit_receptor, nombre_receptor, moneda, total, observaciones, nit_emisor, nombre_emisor FROM facturas WHERE tipo = @tipo AND MONTH(fecha_emision) = @mes AND YEAR(fecha_emision) = @anio";
@@ -395,7 +354,7 @@ namespace hoja_de_trabajo_progra
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        // 2. Definir el encabezado del CSV
+
                         StringBuilder sb = new StringBuilder();
                         if (tipo == "VENTA")
                         {
@@ -406,7 +365,7 @@ namespace hoja_de_trabajo_progra
                             sb.AppendLine("Fecha,Serie,NumeroDTE,NITEmisor,NombreEmisor,Moneda,TotalQ,Observaciones");
                         }
 
-                        // 3. Llenar las filas
+
                         while (reader.Read())
                         {
                             string nit = tipo == "VENTA" ? reader["nit_receptor"].ToString() : reader["nit_emisor"].ToString();
@@ -420,16 +379,15 @@ namespace hoja_de_trabajo_progra
                                 $"{nombre}," +
                                 $"{reader["moneda"]}," +
                                 $"{reader["total"]}," +
-                                $"\"{reader["observaciones"]}\"" // Usar comillas para observaciones con comas
+                                $"\"{reader["observaciones"]}\"" 
                             );
                         }
 
-                        // 4. Agregar el total al final
+
                         decimal total = CalcularTotalPorTipo(tipo, mes, anio);
                         sb.AppendLine($",,,,,TOTAL: {total},");
 
 
-                        // 5. Guardar el archivo (se necesita un SaveFileDialog)
                         SaveFileDialog saveDialog = new SaveFileDialog
                         {
                             Filter = "CSV files (*.csv)|*.csv",
@@ -469,7 +427,6 @@ namespace hoja_de_trabajo_progra
                 DateTime nuevaFechaSegura = new DateTime(fechaActual.Year, nuevoMes, 1);
                 dateTimePicker1.Value = nuevaFechaSegura;
             }
-            // Esto llamará a dateTimePicker1_ValueChanged para recargar.
         }
 
     }
