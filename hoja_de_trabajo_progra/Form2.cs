@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,9 @@ namespace hoja_de_trabajo_progra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string fecha = dateTimePicker1.Text;
+            int mesActual = dateTimePicker1.Value.Month;
+            string nombreMes = dateTimePicker1.Value.ToString("MMMM");
+
             string serie = txtSerie.Text;
             string DTE = txtDTE.Text;
             string autorizacion = txtAutorizacion.Text;
@@ -37,6 +40,21 @@ namespace hoja_de_trabajo_progra
             string moneda = cmbMoneda.SelectedItem.ToString();
             string pago = cmbPago.SelectedItem.ToString();
 
+            private void CambiarMes(int nuevoMes)
+            {
+                DateTime fechaActual = dateTimePicker1.Value;
+            try
+                {
+                DateTime nuevaFecha = new DateTime(fechaActual.Year, nuevoMes, fechaActual.Day);
+                dateTimePicker1.Value = nuevaFecha;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                DateTime nuevaFechaSegura = new DateTime(fechaActual.Year, nuevoMes, 1);
+                dateTimePicker1.Value = nuevaFechaSegura;
+            }
+                
+
             if (radioButton1.Checked)
             {
                 dgvCompra.Rows.Add(fecha, serie, DTE, NitReceptor, nombreReceptor, moneda, observaciones);
@@ -45,7 +63,8 @@ namespace hoja_de_trabajo_progra
             if(radioButton2.Checked)
             {
                 
-                dgvCompra.Rows.Add(fecha, serie, DTE, NitEmisor, NombreEmisor,moneda,observaciones);
+                DateTime fecha = dateTimePicker1.Value;
+                dgvCompra.Rows.Add(fecha, serie, DTE, NitEmisor, NombreEmisor, moneda, observaciones);
             }
         }
     }
