@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtDireccion = new System.Windows.Forms.TextBox();
+            this.txtDireccionEmisor = new System.Windows.Forms.TextBox();
             this.txtNitEmisor = new System.Windows.Forms.TextBox();
             this.txtAcceso = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -47,35 +47,35 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtReceptor = new System.Windows.Forms.TextBox();
+            this.txtNitReceptor = new System.Windows.Forms.TextBox();
             this.txtNombreReceptor = new System.Windows.Forms.TextBox();
-            this.txtTotal = new System.Windows.Forms.TextBox();
             this.txtImpuestos = new System.Windows.Forms.TextBox();
             this.txtDescuentos = new System.Windows.Forms.TextBox();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
-            this.cmbpago = new System.Windows.Forms.ComboBox();
-            this.cmbboxMoneda = new System.Windows.Forms.ComboBox();
+            this.cmbPago = new System.Windows.Forms.ComboBox();
+            this.cmbMoneda = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dgvCompra = new System.Windows.Forms.DataGridView();
             this.dgvVenta = new System.Windows.Forms.DataGridView();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtNombreEmisor = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompra)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtDireccion
+            // txtDireccionEmisor
             // 
-            this.txtDireccion.Location = new System.Drawing.Point(364, 235);
-            this.txtDireccion.Name = "txtDireccion";
-            this.txtDireccion.Size = new System.Drawing.Size(100, 20);
-            this.txtDireccion.TabIndex = 46;
+            this.txtDireccionEmisor.Location = new System.Drawing.Point(364, 235);
+            this.txtDireccionEmisor.Name = "txtDireccionEmisor";
+            this.txtDireccionEmisor.Size = new System.Drawing.Size(100, 20);
+            this.txtDireccionEmisor.TabIndex = 46;
             // 
             // txtNitEmisor
             // 
@@ -232,7 +232,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(521, 136);
+            this.label1.Location = new System.Drawing.Point(523, 167);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 15);
             this.label1.TabIndex = 47;
@@ -242,27 +242,17 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(493, 172);
+            this.label2.Location = new System.Drawing.Point(495, 203);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 15);
             this.label2.TabIndex = 48;
             this.label2.Text = "Nombre receptor";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(553, 207);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 15);
-            this.label3.TabIndex = 49;
-            this.label3.Text = "Total";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(531, 237);
+            this.label4.Location = new System.Drawing.Point(750, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 15);
             this.label4.TabIndex = 50;
@@ -272,7 +262,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(754, 132);
+            this.label14.Location = new System.Drawing.Point(525, 239);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 15);
             this.label14.TabIndex = 51;
@@ -282,7 +272,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(735, 170);
+            this.label15.Location = new System.Drawing.Point(735, 172);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(85, 15);
             this.label15.TabIndex = 52;
@@ -292,75 +282,68 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(739, 211);
+            this.label16.Location = new System.Drawing.Point(739, 204);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(81, 15);
             this.label16.TabIndex = 53;
             this.label16.Text = "Observaciones";
             // 
-            // txtReceptor
+            // txtNitReceptor
             // 
-            this.txtReceptor.Location = new System.Drawing.Point(600, 133);
-            this.txtReceptor.Name = "txtReceptor";
-            this.txtReceptor.Size = new System.Drawing.Size(100, 20);
-            this.txtReceptor.TabIndex = 54;
+            this.txtNitReceptor.Location = new System.Drawing.Point(602, 164);
+            this.txtNitReceptor.Name = "txtNitReceptor";
+            this.txtNitReceptor.Size = new System.Drawing.Size(100, 20);
+            this.txtNitReceptor.TabIndex = 54;
             // 
             // txtNombreReceptor
             // 
-            this.txtNombreReceptor.Location = new System.Drawing.Point(600, 168);
+            this.txtNombreReceptor.Location = new System.Drawing.Point(602, 199);
             this.txtNombreReceptor.Name = "txtNombreReceptor";
             this.txtNombreReceptor.Size = new System.Drawing.Size(100, 20);
             this.txtNombreReceptor.TabIndex = 55;
             // 
-            // txtTotal
-            // 
-            this.txtTotal.Location = new System.Drawing.Point(600, 202);
-            this.txtTotal.Name = "txtTotal";
-            this.txtTotal.Size = new System.Drawing.Size(100, 20);
-            this.txtTotal.TabIndex = 56;
-            // 
             // txtImpuestos
             // 
-            this.txtImpuestos.Location = new System.Drawing.Point(600, 235);
+            this.txtImpuestos.Location = new System.Drawing.Point(826, 131);
             this.txtImpuestos.Name = "txtImpuestos";
             this.txtImpuestos.Size = new System.Drawing.Size(100, 20);
             this.txtImpuestos.TabIndex = 57;
             // 
             // txtDescuentos
             // 
-            this.txtDescuentos.Location = new System.Drawing.Point(826, 130);
+            this.txtDescuentos.Location = new System.Drawing.Point(602, 235);
             this.txtDescuentos.Name = "txtDescuentos";
             this.txtDescuentos.Size = new System.Drawing.Size(100, 20);
             this.txtDescuentos.TabIndex = 58;
             // 
             // txtObservaciones
             // 
-            this.txtObservaciones.Location = new System.Drawing.Point(826, 206);
+            this.txtObservaciones.Location = new System.Drawing.Point(826, 200);
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.Size = new System.Drawing.Size(100, 20);
             this.txtObservaciones.TabIndex = 59;
             // 
-            // cmbpago
+            // cmbPago
             // 
-            this.cmbpago.FormattingEnabled = true;
-            this.cmbpago.Items.AddRange(new object[] {
+            this.cmbPago.FormattingEnabled = true;
+            this.cmbPago.Items.AddRange(new object[] {
             "CONTADO",
             "CREDITO"});
-            this.cmbpago.Location = new System.Drawing.Point(826, 165);
-            this.cmbpago.Name = "cmbpago";
-            this.cmbpago.Size = new System.Drawing.Size(100, 21);
-            this.cmbpago.TabIndex = 60;
+            this.cmbPago.Location = new System.Drawing.Point(826, 164);
+            this.cmbPago.Name = "cmbPago";
+            this.cmbPago.Size = new System.Drawing.Size(100, 21);
+            this.cmbPago.TabIndex = 60;
             // 
-            // cmbboxMoneda
+            // cmbMoneda
             // 
-            this.cmbboxMoneda.FormattingEnabled = true;
-            this.cmbboxMoneda.Items.AddRange(new object[] {
+            this.cmbMoneda.FormattingEnabled = true;
+            this.cmbMoneda.Items.AddRange(new object[] {
             "Quetzales",
             "Dolares"});
-            this.cmbboxMoneda.Location = new System.Drawing.Point(364, 170);
-            this.cmbboxMoneda.Name = "cmbboxMoneda";
-            this.cmbboxMoneda.Size = new System.Drawing.Size(100, 21);
-            this.cmbboxMoneda.TabIndex = 61;
+            this.cmbMoneda.Location = new System.Drawing.Point(364, 170);
+            this.cmbMoneda.Name = "cmbMoneda";
+            this.cmbMoneda.Size = new System.Drawing.Size(100, 21);
+            this.cmbMoneda.TabIndex = 61;
             // 
             // button1
             // 
@@ -374,6 +357,7 @@
             this.button1.TabIndex = 62;
             this.button1.Text = "Ingresar Datos";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // dgvCompra
             // 
@@ -418,34 +402,51 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
             this.dateTimePicker1.TabIndex = 67;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Berlin Sans FB", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(505, 136);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 15);
+            this.label3.TabIndex = 68;
+            this.label3.Text = "Nombre emisor";
+            // 
+            // txtNombreEmisor
+            // 
+            this.txtNombreEmisor.Location = new System.Drawing.Point(602, 134);
+            this.txtNombreEmisor.Name = "txtNombreEmisor";
+            this.txtNombreEmisor.Size = new System.Drawing.Size(100, 20);
+            this.txtNombreEmisor.TabIndex = 69;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
             this.ClientSize = new System.Drawing.Size(979, 679);
+            this.Controls.Add(this.txtNombreEmisor);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.dgvVenta);
             this.Controls.Add(this.dgvCompra);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.cmbboxMoneda);
-            this.Controls.Add(this.cmbpago);
+            this.Controls.Add(this.cmbMoneda);
+            this.Controls.Add(this.cmbPago);
             this.Controls.Add(this.txtObservaciones);
             this.Controls.Add(this.txtDescuentos);
             this.Controls.Add(this.txtImpuestos);
-            this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.txtNombreReceptor);
-            this.Controls.Add(this.txtReceptor);
+            this.Controls.Add(this.txtNitReceptor);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtDireccion);
+            this.Controls.Add(this.txtDireccionEmisor);
             this.Controls.Add(this.txtNitEmisor);
             this.Controls.Add(this.txtAcceso);
             this.Controls.Add(this.label13);
@@ -473,7 +474,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtDireccion;
+        private System.Windows.Forms.TextBox txtDireccionEmisor;
         private System.Windows.Forms.TextBox txtNitEmisor;
         private System.Windows.Forms.TextBox txtAcceso;
         private System.Windows.Forms.Label label13;
@@ -492,24 +493,24 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtReceptor;
+        private System.Windows.Forms.TextBox txtNitReceptor;
         private System.Windows.Forms.TextBox txtNombreReceptor;
-        private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.TextBox txtImpuestos;
         private System.Windows.Forms.TextBox txtDescuentos;
         private System.Windows.Forms.TextBox txtObservaciones;
-        private System.Windows.Forms.ComboBox cmbpago;
-        private System.Windows.Forms.ComboBox cmbboxMoneda;
+        private System.Windows.Forms.ComboBox cmbPago;
+        private System.Windows.Forms.ComboBox cmbMoneda;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dgvCompra;
         private System.Windows.Forms.DataGridView dgvVenta;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtNombreEmisor;
     }
 }
