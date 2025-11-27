@@ -66,6 +66,7 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.txtNombreEmisor = new System.Windows.Forms.TextBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompra)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).BeginInit();
             this.SuspendLayout();
@@ -338,8 +339,9 @@
             // 
             this.cmbMoneda.FormattingEnabled = true;
             this.cmbMoneda.Items.AddRange(new object[] {
-            "Quetzales",
-            "Dolares"});
+            "GTQ",
+            "USD",
+            "EUR"});
             this.cmbMoneda.Location = new System.Drawing.Point(364, 170);
             this.cmbMoneda.Name = "cmbMoneda";
             this.cmbMoneda.Size = new System.Drawing.Size(100, 21);
@@ -419,12 +421,20 @@
             this.txtNombreEmisor.Size = new System.Drawing.Size(100, 20);
             this.txtNombreEmisor.TabIndex = 69;
             // 
+            // txtTotal
+            // 
+            this.txtTotal.Location = new System.Drawing.Point(826, 239);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtTotal.TabIndex = 70;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
             this.ClientSize = new System.Drawing.Size(979, 679);
+            this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.txtNombreEmisor);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePicker1);
@@ -465,6 +475,7 @@
             this.Controls.Add(this.label5);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCompra)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVenta)).EndInit();
             this.ResumeLayout(false);
@@ -512,5 +523,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtNombreEmisor;
+        private System.Windows.Forms.TextBox txtTotal;
     }
 }
